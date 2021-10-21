@@ -6,9 +6,11 @@ export default function TodoList(props) {
       key={todo.id}
       id={todo.id}
       tarea={todo.tarea}
+      terminado={todo.terminado}
       handleDelClick={props.handleDelClick}
+      handleCheck={props.handleCheck}
     />
   ));
 
-  return <div>{todosComponents}</div>;
+  return <div className="p-1">{todosComponents}</div>;
 }
