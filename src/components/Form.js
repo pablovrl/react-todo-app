@@ -15,16 +15,16 @@ export default function Form(props) {
           props.handleAddClick(tarea);
           setTarea("");
         }}
-        className="flex flex-row m-4 items-center justify-between "
+        className=""
       >
         <input
-          className="shadow border rounded h-9 w-full p-2 focus:ring focus:outline-none focus:ring-purple-500"
+          className="bg-gray-700 text-gray-400 w-full h-14 p-4 my-9 rounded-md focus:outline-none"
           value={tarea}
           onChange={handleChange}
-          placeholder="Ingrese su tarea"
+          placeholder="Create a new todo..."
         />
-        <button className="border ml-2 h-9 w-20 rounded shadow bg-purple-600 text-gray-100">
-          Crear
+        <button className="hidden">
+          <i className="fas fa-plus"></i>
         </button>
       </form>
   );

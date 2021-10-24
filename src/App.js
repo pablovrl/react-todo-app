@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useEffect } from "react/cjs/react.development";
 import Form from "./components/Form";
 import TodoList from "./components/TodoList";
-import ReactModal from "react-modal";
 
 function App() {
+  const [lastTodo, setlastTodo] = useState();
+
   const [todos, setTodos] = useState([
     {
       id: 1,
@@ -13,28 +15,39 @@ function App() {
     {
       id: 2,
       tarea: "Lavar los platos",
-      terminado: false,
+      terminado: true,
     },
     {
       id: 3,
-      tarea: "Ignacio González",
+      tarea: "Pasear a los perros",
       terminado: false,
     },
   ]);
 
-  const handleAddClick = (tarea) => {
-    let id = 1;
+  useEffect(() => {
     if (todos.length !== 0) {
-      id = todos[todos.length - 1].id + 1;
+      setlastTodo(todos[todos.length - 1].id);
     }
+  }, [todos]);
 
-    const newTodo = {
-      id: id,
-      tarea: tarea,
-      terminado: false,
-    };
+  const handleAddClick = (tarea) => {
+    if (tarea !== "") {
+      let id = 1;
+      if (todos.length !== 0) {
+        id = todos[todos.length - 1].id + 1;
+      }
+      const newTodo = {
+        id: id,
+        tarea: tarea,
+        terminado: false,
+      };
 
-    setTodos([...todos, newTodo]);
+      setlastTodo(newTodo.id);
+
+      setTodos([...todos, newTodo]);
+    } else {
+      alert("Ingrese una tarea por favor.");
+    }
   };
 
   const handleDelClick = (id) => {
@@ -42,27 +55,37 @@ function App() {
   };
 
   const handleCheck = (id) => {
-    setTodos(todos.map(todo => {
-      if(todo.id === id){
-        return {...todo, terminado: !todo.terminado}
-      } else { return {...todo}}
-    }));
+    setTodos(
+      todos.map((todo) => {
+        if (todo.id === id) {
+          return {
+            ...todo,
+            terminado: !todo.terminado,
+          };
+        }
+        return { ...todo };
+      })
+    );
   };
 
   return (
-    <div className="bg-gray-50 h-screen flex flex-col">
-      <div className="h-18">
-        <h1 className="text-4xl p-4 font-semibold text-black">Tus tareas</h1>
-      </div>
-      <div className=" flex-1 overflow-y-scroll">
-        <TodoList
-          todos={todos}
-          handleDelClick={handleDelClick}
-          handleCheck={handleCheck}
-        />
-      </div>
-      <div className=" flex justify-center">
-        <Form handleAddClick={handleAddClick} />
+    <div className="bg-gray-900 h-screen sm:flex sm:justify-center">
+      <div className="bg-purple-600 h-64 w-full absolute"></div>
+      <div className="p-6 relative w-full sm:max-w-2xl flex flex-col">
+        <div className="h-auto">
+          <h1 className="text-white text-4xl font-semibold mt-8">T O D O</h1>
+        </div>
+        <div className="h-auto">
+          <Form handleAddClick={handleAddClick} />
+        </div>
+        <div className="flex-1 overflow-y-auto">
+          <TodoList
+            todos={todos}
+            handleDelClick={handleDelClick}
+            handleCheck={handleCheck}
+            lastTodo={lastTodo}
+          />
+        </div>
       </div>
     </div>
   );

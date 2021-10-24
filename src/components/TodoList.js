@@ -9,8 +9,9 @@ export default function TodoList(props) {
       terminado={todo.terminado}
       handleDelClick={props.handleDelClick}
       handleCheck={props.handleCheck}
+      lastTodo={props.lastTodo}
     />
   ));
 
-  return <div className="p-1">{todosComponents}</div>;
+  return <div className="bg-gray-700 rounded-md">{todosComponents}</div>;
 }

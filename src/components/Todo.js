@@ -1,18 +1,45 @@
 import React from "react";
 
 export default function Todo(props) {
+  let buttonClass = "border-2";
+  if (props.terminado) {
+    buttonClass = "bg-gradient-to-r from-purple-300 to-purple-600";
+  }
+
   return (
-    <div className="flex m-5 bg-white p-3 rounded shadow-lg items-center border-l-4 border-purple-500">
-      <div className="mr-2 items-center flex">
-        <input className="w-4 h-4" type="checkbox" defaultChecked={props.terminado} onClick={() => props.handleCheck(props.id)}/>
-      </div>
-      <div className="grid grid-cols-12 w-full items-center">
-        <p className={`col-start-1 col-end-8 overflow-ellipsis overflow-hidden ${props.terminado ? "line-through text-gray-400 italic": "text-black"}`}>{props.tarea}</p>
+    <div
+      className={`flex h-14 px-6 items-center ${
+        props.lastTodo === props.id ? "" : "border-b-2 border-gray-600"
+      } `}
+    >
+      <div className="flex justify-center">
         <button
-          className="col-start-11 bg-red-500 rounded text-xs border h-6 w-10 text-white"
+          className={
+            buttonClass +
+            " border-gray-500 rounded-full h-6 w-6 flex justify-center items-center"
+          }
+          onClick={() => props.handleCheck(props.id)}
+        >
+          {props.terminado &&
+            <i className="fas fa-check fa-sm"></i>
+          }
+        </button>
+      </div>
+      <div className="flex justify-between w-full">
+        <p
+          className={`ml-3 ${
+            props.terminado
+              ? "line-through text-gray-500 italic"
+              : "text-gray-300"
+          }`}
+        >
+          {props.tarea}
+        </p>
+        <button
+          className="text-gray-300"
           onClick={() => props.handleDelClick(props.id)}
         >
-          DEL
+          <i className="fas fa-times"></i>
         </button>
       </div>
     </div>
