@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
+import "./Modal.css";
 
 export default function Todo(props) {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,26 +11,15 @@ export default function Todo(props) {
     buttonClass = "bg-gradient-to-r from-purple-300 to-purple-600";
   }
 
-  const customStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-    },
-  };
-
   const handleChange = (evt) => {
     setTarea(evt.target.value);
   };
 
-  Modal.setAppElement('#root');
+  Modal.setAppElement("#root");
 
   return (
     <div
-      className={`flex h-14 px-6 items-center ${
+      className={`flex px-6 py-4 items-center overflow-hidden ${
         props.lastTodo === props.id ? "" : "border-b-2 border-gray-600"
       } `}
     >
@@ -70,9 +60,15 @@ export default function Todo(props) {
           </button>
         </div>
       </div>
-      <Modal isOpen={isOpen} contentLabel="Example Modal" style={customStyles}>
-        <div className="min-w-full max-w-xs">
-          <h2>Edit task</h2>
+      <Modal
+        isOpen={isOpen}
+        contentLabel="Example Modal"
+        className="mymodal"
+        overlayClassName="myoverlay"
+        closeTimeoutMS={200}
+      >
+        <div className="bg-gray-800 p-4 rounded">
+          <h2 className="text-gray-200 text-2xl mb-6">Edit task</h2>
           <form
             className=""
             onSubmit={(evt) => {
@@ -81,16 +77,19 @@ export default function Todo(props) {
             }}
           >
             <input
-              className="border m-2"
+              className="bg-gray-700 w-80 text-gray-400 sm:w-96 h-14 p-4 rounded-md mb-6 focus:outline-none"
               value={tarea}
               onChange={handleChange}
             />
           </form>
           <button
-            className="border w-full rounded p-1 bg-red-400 text-gray-100 hover:bg-red-600"
-            onClick={() => {setIsOpen(!isOpen); setTarea(props.tarea)}}
+            className="h-10 font-semibold w-32 rounded p-1 bg-red-400 text-gray-100 hover:bg-red-600 "
+            onClick={() => {
+              setIsOpen(!isOpen);
+              setTarea(props.tarea);
+            }}
           >
-            close
+            Close
           </button>
         </div>
       </Modal>
