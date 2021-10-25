@@ -10,6 +10,7 @@ export default function TodoList(props) {
       handleDelClick={props.handleDelClick}
       handleCheck={props.handleCheck}
       lastTodo={props.lastTodo}
+      handleEdit={props.handleEdit}
     />
   ));
 

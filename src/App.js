@@ -30,6 +30,18 @@ function App() {
     }
   }, [todos]);
 
+  const handleEdit = (evt, id, tarea) => {
+    evt.preventDefault();
+    setTodos(
+      todos.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, tarea: tarea };
+        }
+        return { ...todo };
+      })
+    );
+  };
+
   const handleAddClick = (tarea) => {
     if (tarea !== "") {
       let id = 1;
@@ -69,11 +81,11 @@ function App() {
   };
 
   return (
-    <div className="bg-gray-900 h-screen sm:flex sm:justify-center">
-      <div className="bg-purple-600 h-64 w-full absolute"></div>
+    <div className="bg-gray-800 h-screen sm:flex sm:justify-center font-sans">
+      <div className="bg-purple-400 h-64 w-full absolute"></div>
       <div className="p-6 relative w-full sm:max-w-2xl flex flex-col">
         <div className="h-auto">
-          <h1 className="text-white text-4xl font-semibold mt-8">T O D O</h1>
+          <h1 className="text-white text-4xl font-bold mt-8">T O D O</h1>
         </div>
         <div className="h-auto">
           <Form handleAddClick={handleAddClick} />
@@ -84,6 +96,7 @@ function App() {
             handleDelClick={handleDelClick}
             handleCheck={handleCheck}
             lastTodo={lastTodo}
+            handleEdit={handleEdit}
           />
         </div>
       </div>
