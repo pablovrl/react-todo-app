@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react/cjs/react.development";
 import Form from "./components/Form";
 import TodoList from "./components/TodoList";
+import "./components/Modal.css";
 
 function App() {
   const [lastTodo, setlastTodo] = useState();
@@ -29,18 +30,6 @@ function App() {
       setlastTodo(todos[todos.length - 1].id);
     }
   }, [todos]);
-
-  const handleEdit = (evt, id, tarea) => {
-    evt.preventDefault();
-    setTodos(
-      todos.map((todo) => {
-        if (todo.id === id) {
-          return { ...todo, tarea: tarea };
-        }
-        return { ...todo };
-      })
-    );
-  };
 
   const handleAddClick = (tarea) => {
     if (tarea !== "") {
@@ -90,13 +79,13 @@ function App() {
         <div className="h-auto">
           <Form handleAddClick={handleAddClick} />
         </div>
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto section">
           <TodoList
             todos={todos}
+            setTodos={setTodos}
             handleDelClick={handleDelClick}
             handleCheck={handleCheck}
             lastTodo={lastTodo}
-            handleEdit={handleEdit}
           />
         </div>
       </div>
