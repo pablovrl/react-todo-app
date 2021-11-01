@@ -2,11 +2,57 @@ import { useState } from "react";
 import { useEffect } from "react/cjs/react.development";
 import Form from "./components/Form";
 import TodoList from "./components/TodoList";
-import "./components/Modal.css";
+import dateFormat, { i18n } from "dateformat";
 
 function App() {
-  const [lastTodo, setlastTodo] = useState();
+  const now = new Date();
+  const fecha = dateFormat(now, "dddd, dd mmmm, yyyy");
 
+  i18n.dayNames = [
+    "Sun",
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat",
+    "Domingo",
+    "Lunes",
+    "Martes",
+    "Miércoles",
+    "Jueves",
+    "Viernes",
+    "Sábado",
+  ];
+
+  i18n.monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ];
+
+  const [lastTodo, setlastTodo] = useState();
   const [todos, setTodos] = useState([
     {
       id: 1,
@@ -16,7 +62,7 @@ function App() {
     {
       id: 2,
       tarea: "Lavar los platos",
-      terminado: true,
+      terminado: false,
     },
     {
       id: 3,
@@ -70,13 +116,13 @@ function App() {
   };
 
   return (
-    <div className="bg-gray-800 h-screen sm:flex sm:justify-center font-sans">
-      <div className="bg-purple-400 h-64 w-full absolute"></div>
+    <div className="bg-gray-200 h-screen sm:flex sm:justify-center font-sans">
       <div className="p-6 relative w-full sm:max-w-2xl flex flex-col">
-        <div className="h-auto">
-          <h1 className="text-white text-4xl font-bold mt-8">T O D O</h1>
+        <div className="h-auto mt-8">
+          <h1 className="text-4xl font-bold">Buenas tardes, Pablo</h1>
+          <h2 className="text-xl mt-2">Hoy es {fecha}</h2>
         </div>
-        <div className="h-auto">
+        <div className="">
           <Form handleAddClick={handleAddClick} />
         </div>
         <div className="flex-1 overflow-y-auto section">
