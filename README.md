@@ -1,3 +1,3 @@
 # REACT TO-DO APP
-<img src="https://user-images.githubusercontent.com/62177255/138620134-4d18674d-7f05-451a-8223-1be4531d036a.png" width="600">
-<img style="display: inline;" src="https://user-images.githubusercontent.com/62177255/138620165-2d5f7507-095d-45d5-9ceb-b381fd82b81e.png" width="300">
+<img src="https://user-images.githubusercontent.com/62177255/139613649-9daf8a4d-8fbd-485e-a2a5-f8be03f5a4a8.png" width="600">
+<img style="display: inline;" src="https://user-images.githubusercontent.com/62177255/139613653-7e440186-2f0c-4065-8e5f-fbe67bb7d314.png" width="300">
