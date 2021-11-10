@@ -8,10 +8,11 @@ import {
 	Spacer,
 	Text,
 	Heading,
-	useDisclosure
+	useDisclosure,
+	Checkbox
 } from '@chakra-ui/react'
 
-export default function TodoList({ todos, handleDelClick, handleEditClick}) {
+export default function TodoList({ todos, handleDelClick, handleEditClick, handleCheckChange }) {
 
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const [editId, setEditId] = useState()
@@ -35,14 +36,15 @@ export default function TodoList({ todos, handleDelClick, handleEditClick}) {
 						borderRadius="5px"
 						p={3}
 					>
-						<Text>{todo.task}</Text>
+						<Checkbox isChecked={todo.completed} onChange={() => handleCheckChange(todo.id)}/>
+						<Text as={todo.completed ? "del" : ""}>{todo.task}</Text>
 						<Spacer />
-						<IconButton icon={<FaPen />} onClick={() => {setEditId(todo.id); onOpen()}} />
+						<IconButton icon={<FaPen />} onClick={() => { setEditId(todo.id); onOpen() }} />
 						<IconButton icon={<FaTrash />} onClick={() => handleDelClick(todo.id)} />
 					</HStack>
 				))}
 			</VStack>
-			<EditModal isOpen={isOpen} onClose={onClose} id={editId} handleEditClick={handleEditClick}/>
+			<EditModal isOpen={isOpen} onClose={onClose} id={editId} handleEditClick={handleEditClick} />
 		</>
 	)
 }

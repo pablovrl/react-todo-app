@@ -55,6 +55,14 @@ function App() {
     }))
   }
 
+  const handleCheckChange = (id) => {
+    setTodos(todos.map(todo => {
+      if(todo.id === id) {
+        return {...todo, completed: !todo.completed}
+      } else return {...todo}
+    }))
+  }
+
   return (
     <Flex w="100vw" justifyContent="center">
       <VStack p={4} w="45rem" spacing="25px">
@@ -68,7 +76,7 @@ function App() {
         </Heading>
         <TodoInput handleAddClick={handleAddClick}/>
         <Filters todos={todos} />
-        <TodoList todos={todos} handleDelClick={handleDelClick} handleEditClick={handleEditClick}/>
+        <TodoList todos={todos} handleCheckChange={handleCheckChange} handleDelClick={handleDelClick} handleEditClick={handleEditClick}/>
       </VStack>
     </Flex>
   );
