@@ -47,6 +47,14 @@ function App() {
     setTodos(todos.filter(todo => todo.id !== id))
   }
 
+  const handleEditClick = (id, task) => {
+    setTodos(todos.map(todo => {
+      if(todo.id === id) {
+        return {...todo, task: task}
+      } else return {...todo}
+    }))
+  }
+
   return (
     <Flex w="100vw" justifyContent="center">
       <VStack p={4} w="45rem" spacing="25px">
@@ -56,11 +64,11 @@ function App() {
           alignSelf="end"
         />
         <Heading>
-          Buenos tardes
+          Simple Todo App
         </Heading>
         <TodoInput handleAddClick={handleAddClick}/>
         <Filters todos={todos} />
-        <TodoList todos={todos} handleDelClick={handleDelClick} />
+        <TodoList todos={todos} handleDelClick={handleDelClick} handleEditClick={handleEditClick}/>
       </VStack>
     </Flex>
   );

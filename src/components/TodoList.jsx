@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaTrash, FaPen } from 'react-icons/fa'
+import EditModal from './EditModal'
 import {
 	VStack,
 	HStack,
@@ -7,10 +8,13 @@ import {
 	Spacer,
 	Text,
 	Heading,
-
+	useDisclosure
 } from '@chakra-ui/react'
 
-export default function TodoList({ todos, handleDelClick }) {
+export default function TodoList({ todos, handleDelClick, handleEditClick}) {
+
+	const { isOpen, onOpen, onClose } = useDisclosure()
+	const [editId, setEditId] = useState()
 
 	if (todos.length === 0) {
 		return (
@@ -33,11 +37,12 @@ export default function TodoList({ todos, handleDelClick }) {
 					>
 						<Text>{todo.task}</Text>
 						<Spacer />
-						<IconButton icon={<FaPen />} />
+						<IconButton icon={<FaPen />} onClick={() => {setEditId(todo.id); onOpen()}} />
 						<IconButton icon={<FaTrash />} onClick={() => handleDelClick(todo.id)} />
 					</HStack>
 				))}
 			</VStack>
+			<EditModal isOpen={isOpen} onClose={onClose} id={editId} handleEditClick={handleEditClick}/>
 		</>
 	)
 }
