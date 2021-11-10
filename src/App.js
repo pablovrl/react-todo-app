@@ -27,6 +27,11 @@ function App() {
 
   const { colorMode, toggleColorMode } = useColorMode()
 
+  const completed = todos.filter(todo => todo.completed === true)
+  const notCompleted = todos.filter(todo => todo.completed === false)
+
+  console.log(completed)
+
   const handleAddClick = (task) => {
     let id = 1;
     if (todos.length !== 0) {
@@ -75,7 +80,7 @@ function App() {
           Simple Todo App
         </Heading>
         <TodoInput handleAddClick={handleAddClick}/>
-        <Filters todos={todos} />
+        <Filters todos={todos} completed={completed.length} notCompleted={notCompleted.length} />
         <TodoList todos={todos} handleCheckChange={handleCheckChange} handleDelClick={handleDelClick} handleEditClick={handleEditClick}/>
       </VStack>
     </Flex>
