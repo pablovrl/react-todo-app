@@ -1,141 +1,68 @@
-import { useState } from "react";
-import { useEffect } from "react/cjs/react.development";
-import Form from "./components/Form";
-import TodoList from "./components/TodoList";
-import dateFormat, { i18n } from "dateformat";
+import React, { useState } from 'react'
+import { Heading, VStack, IconButton, useColorMode, Flex } from '@chakra-ui/react'
+import { FaSun, FaMoon } from 'react-icons/fa'
+import TodoList from './components/TodoList';
+import TodoInput from './components/TodoInput';
+import Filters from './components/Filters';
 
 function App() {
-  const now = new Date();
-  const fecha = dateFormat(now, "dddd, dd mmmm, yyyy");
 
-  i18n.dayNames = [
-    "Sun",
-    "Mon",
-    "Tue",
-    "Wed",
-    "Thu",
-    "Fri",
-    "Sat",
-    "Domingo",
-    "Lunes",
-    "Martes",
-    "Miércoles",
-    "Jueves",
-    "Viernes",
-    "Sábado",
-  ];
-
-  i18n.monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre",
-  ];
-
-  const [lastTodo, setlastTodo] = useState();
   const [todos, setTodos] = useState([
     {
       id: 1,
-      tarea: "Hacer la cama",
-      terminado: true,
+      task: "Ver TV",
+      completed: true
     },
     {
       id: 2,
-      tarea: "Lavar los platos",
-      terminado: false,
+      task: "Aprender sobre Chakra UI",
+      completed: true
     },
     {
       id: 3,
-      tarea: "Pasear a los perros",
-      terminado: false,
-    },
-  ]);
+      task: "Vivamus feugiat non augue eget molestie. Aliquam dapibus lorem vel sem lacinia tincidunt. Integer egestas tellus quis massa suscipit, eu ullamcorper nisi feugiat.",
+      completed: false
+    }
+  ])
 
-  useEffect(() => {
+  const { colorMode, toggleColorMode } = useColorMode()
+
+  const handleAddClick = (task) => {
+    let id = 1;
     if (todos.length !== 0) {
-      setlastTodo(todos[todos.length - 1].id);
+      const todosIds = todos.map(todo => todo.id)
+      id = Math.max(...todosIds) + 1
     }
-  }, [todos]);
 
-  const handleAddClick = (tarea) => {
-    if (tarea !== "") {
-      let id = 1;
-      if (todos.length !== 0) {
-        id = todos[todos.length - 1].id + 1;
-      }
-      const newTodo = {
-        id: id,
-        tarea: tarea,
-        terminado: false,
-      };
-
-      setlastTodo(newTodo.id);
-
-      setTodos([...todos, newTodo]);
-    } else {
-      alert("Ingrese una tarea por favor.");
+    const newTodo = {
+      id: id,
+      task: task,
+      completed: false
     }
-  };
+
+    setTodos([...todos, newTodo])
+  }
 
   const handleDelClick = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  };
-
-  const handleCheck = (id) => {
-    setTodos(
-      todos.map((todo) => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            terminado: !todo.terminado,
-          };
-        }
-        return { ...todo };
-      })
-    );
-  };
+    setTodos(todos.filter(todo => todo.id !== id))
+  }
 
   return (
-    <div className="bg-gray-200 h-screen sm:flex sm:justify-center font-sans">
-      <div className="p-6 relative w-full sm:max-w-2xl flex flex-col">
-        <div className="h-auto mt-8">
-          <h1 className="text-4xl font-bold">Buenas tardes, Pablo</h1>
-          <h2 className="text-xl mt-2">Hoy es {fecha}</h2>
-        </div>
-        <div className="">
-          <Form handleAddClick={handleAddClick} />
-        </div>
-        <div className="flex-1 overflow-y-auto section">
-          <TodoList
-            todos={todos}
-            setTodos={setTodos}
-            handleDelClick={handleDelClick}
-            handleCheck={handleCheck}
-            lastTodo={lastTodo}
-          />
-        </div>
-      </div>
-    </div>
+    <Flex w="100vw" justifyContent="center">
+      <VStack p={4} w="45rem" spacing="25px">
+        <IconButton
+          icon={colorMode === "light" ? <FaMoon /> : <FaSun />}
+          onClick={toggleColorMode}
+          alignSelf="end"
+        />
+        <Heading>
+          Buenos tardes
+        </Heading>
+        <TodoInput handleAddClick={handleAddClick}/>
+        <Filters todos={todos} />
+        <TodoList todos={todos} handleDelClick={handleDelClick} />
+      </VStack>
+    </Flex>
   );
 }
 
