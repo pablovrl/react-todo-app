@@ -61,14 +61,20 @@ function App() {
 
   const handleCheckChange = (id) => {
     console.log(id)
-    const actualImportant = todos.map(todo => {
+
+    let currentImportant = false
+
+    todos.forEach(todo => {
       if(todo._id === id) {
-        return todo.important
+        currentImportant = todo.important
       }
-    })[0]
+    })
+
     const newNote = {
-      important: !actualImportant
+      important: !currentImportant
     }
+
+
     axios.put('https://pure-sea-64763.herokuapp.com/api/notes/' + id, newNote)
     .then(() => {
       getAllNotes()
