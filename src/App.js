@@ -16,8 +16,8 @@ function App() {
 
   const { colorMode, toggleColorMode } = useColorMode()
 
-  const completed = todos.filter(todo => todo.completed === true)
-  const notCompleted = todos.filter(todo => todo.completed === false)
+  const completed = todos.filter(todo => todo.important === true)
+  const notCompleted = todos.filter(todo => todo.important === false)
 
   const getAllNotes = () => {
     axios.get('https://pure-sea-64763.herokuapp.com/api/notes')
