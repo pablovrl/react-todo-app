@@ -6,9 +6,9 @@ Una simple lista de To Do's creada en React.
 - Chakra UI
 
 ## Vista Previa
-[Prueba la aplicación aquí!](https://tranquil-atoll-34350.herokuapp.com/)
+[Prueba la aplicación aquí!](https://shielded-meadow-25567.herokuapp.com/) (Aveces hay que recargar la página para que funcione :()
 
-![Alt Text](https://s10.gifyu.com/images/todo-react.gif)
+![Vista previa](https://media.giphy.com/media/HMj4Ji1oKuNHQAfwXm/giphy.gif)
 
 ## Configurar proyecto
 Clonar el repositorio y ejecutar 
