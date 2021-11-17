@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import { Heading, VStack, IconButton, useColorMode, Flex } from '@chakra-ui/react'
 import { FaSun, FaMoon } from 'react-icons/fa'
 import TodoList from './components/TodoList';
@@ -7,65 +8,71 @@ import Filters from './components/Filters';
 
 function App() {
 
-  const [todos, setTodos] = useState([
-    {
-      id: 1,
-      task: "Ver TV",
-      completed: true
-    },
-    {
-      id: 2,
-      task: "Aprender sobre Chakra UI",
-      completed: true
-    },
-    {
-      id: 3,
-      task: "Vivamus feugiat non augue eget molestie. Aliquam dapibus lorem vel sem lacinia tincidunt. Integer egestas tellus quis massa suscipit, eu ullamcorper nisi feugiat.",
-      completed: false
-    }
-  ])
+  useEffect(() => {
+    getAllNotes()
+  }, [])
+
+  const [todos, setTodos] = useState([])
 
   const { colorMode, toggleColorMode } = useColorMode()
 
   const completed = todos.filter(todo => todo.completed === true)
   const notCompleted = todos.filter(todo => todo.completed === false)
 
-  console.log(completed)
+  const getAllNotes = () => {
+    axios.get('https://pure-sea-64763.herokuapp.com/api/notes')
+    .then((response) =>{
+      setTodos(response.data)
+    })
+  }
 
-  const handleAddClick = (task) => {
-    let id = 1;
-    if (todos.length !== 0) {
-      const todosIds = todos.map(todo => todo.id)
-      id = Math.max(...todosIds) + 1
+  const handleAddClick = (task, evt) => {
+
+    evt.preventDefault()
+
+    const newNote = {
+      content: task,
+      important: false
     }
 
-    const newTodo = {
-      id: id,
-      task: task,
-      completed: false
-    }
-
-    setTodos([...todos, newTodo])
+    axios.post('https://pure-sea-64763.herokuapp.com/api/notes/', newNote)
+    .then(() => {
+      getAllNotes()
+    })
   }
 
   const handleDelClick = (id) => {
-    setTodos(todos.filter(todo => todo.id !== id))
+    console.log(id)
+    axios.delete('https://pure-sea-64763.herokuapp.com/api/notes/' + id)
+    .then(() => {
+      getAllNotes()
+    })
   }
 
   const handleEditClick = (id, task) => {
-    setTodos(todos.map(todo => {
-      if(todo.id === id) {
-        return {...todo, task: task}
-      } else return {...todo}
-    }))
+    const newNote = {
+      content: task
+    } 
+    axios.put('https://pure-sea-64763.herokuapp.com/api/notes/' + id, newNote)
+    .then(() => {
+      getAllNotes()
+    })
   }
 
   const handleCheckChange = (id) => {
-    setTodos(todos.map(todo => {
-      if(todo.id === id) {
-        return {...todo, completed: !todo.completed}
-      } else return {...todo}
-    }))
+    console.log(id)
+    const actualImportant = todos.map(todo => {
+      if(todo._id === id) {
+        return todo.important
+      }
+    })[0]
+    const newNote = {
+      important: !actualImportant
+    }
+    axios.put('https://pure-sea-64763.herokuapp.com/api/notes/' + id, newNote)
+    .then(() => {
+      getAllNotes()
+    })
   }
 
   return (

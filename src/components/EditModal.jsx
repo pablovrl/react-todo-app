@@ -34,7 +34,7 @@ export default function EditModal({isOpen, onClose, id, handleEditClick}) {
             <Input value={input} onChange={handleChange} placeholder="Nueva tarea"/>
           </ModalBody>
           <ModalFooter>
-            <Button variant="ghost" onClick={() => {handleEditClick(id, input); clearInput(); onClose()}}>Editar</Button>
+            <Button variant="solid" colorScheme="blue" onClick={() => {handleEditClick(id, input); clearInput(); onClose()}}>Editar</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

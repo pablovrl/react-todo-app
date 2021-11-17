@@ -14,11 +14,11 @@ export default function TodoInput({ handleAddClick }) {
   }
 
   return (
-    <FormControl>
+    <form onSubmit={(evt) => { handleAddClick(input, evt); clearInput();}} style={{width: "100%"}}>
       <HStack>
-        <Input value={input} placeholder="Haz algo..." onChange={handleChange} />
-        <Button onClick={() => { handleAddClick(input); clearInput(); }}>Añadir</Button>
+          <Input value={input} placeholder="Haz algo..." onChange={handleChange} />
+          <Button type="submit">Añadir</Button>
       </HStack>
-    </FormControl>
+    </form>
   )
 }

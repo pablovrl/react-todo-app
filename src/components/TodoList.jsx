@@ -31,16 +31,16 @@ export default function TodoList({ todos, handleDelClick, handleEditClick, handl
 			>
 				{todos.map(todo => (
 					<HStack
-						key={todo.id}
+						key={todo._id}
 						borderWidth="2px"
 						borderRadius="5px"
 						p={3}
 					>
-						<Checkbox isChecked={todo.completed} onChange={() => handleCheckChange(todo.id)}/>
-						<Text as={todo.completed ? "del" : ""}>{todo.task}</Text>
+						<Checkbox isChecked={todo.important} onChange={() => handleCheckChange(todo._id)}/>
+						<Text as={todo.important ? "del" : ""}>{todo.content}</Text>
 						<Spacer />
-						<IconButton icon={<FaPen />} onClick={() => { setEditId(todo.id); onOpen() }} />
-						<IconButton icon={<FaTrash />} onClick={() => handleDelClick(todo.id)} />
+						<IconButton icon={<FaPen />} onClick={() => { setEditId(todo._id); onOpen() }} />
+						<IconButton icon={<FaTrash />} onClick={() => handleDelClick(todo._id)} />
 					</HStack>
 				))}
 			</VStack>
