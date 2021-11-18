@@ -42,7 +42,6 @@ function App() {
   }
 
   const handleDelClick = (id) => {
-    console.log(id)
     axios.delete('https://pure-sea-64763.herokuapp.com/api/notes/' + id)
     .then(() => {
       getAllNotes()
@@ -60,7 +59,6 @@ function App() {
   }
 
   const handleCheckChange = (id) => {
-    console.log(id)
 
     let currentImportant = false
 

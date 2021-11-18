@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FormControl, Input, Button, HStack } from '@chakra-ui/react'
+import { Input, Button, HStack } from '@chakra-ui/react'
 
 export default function TodoInput({ handleAddClick }) {
 
