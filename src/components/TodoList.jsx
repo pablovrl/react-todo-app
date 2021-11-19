@@ -9,13 +9,20 @@ import {
 	Text,
 	Heading,
 	useDisclosure,
-	Checkbox
+	Checkbox,
+	Spinner
 } from '@chakra-ui/react'
 
-export default function TodoList({ todos, handleDelClick, handleEditClick, handleCheckChange }) {
+export default function TodoList({ todos, loading, handleDelClick, handleEditClick, handleCheckChange }) {
 
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const [editId, setEditId] = useState()
+
+	if(loading && todos.length === 0) {
+		return (
+			<Spinner size="xl"/>
+		)
+	}
 
 	if (todos.length === 0) {
 		return (

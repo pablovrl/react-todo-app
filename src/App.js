@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Heading, VStack, IconButton, useColorMode, Flex } from '@chakra-ui/react'
+import { Heading, VStack, IconButton, useColorMode, Flex} from '@chakra-ui/react'
 import { FaSun, FaMoon } from 'react-icons/fa'
 import TodoList from './components/TodoList';
 import TodoInput from './components/TodoInput';
@@ -13,17 +13,18 @@ function App() {
   }, [])
 
   const [todos, setTodos] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const { colorMode, toggleColorMode } = useColorMode()
 
   const completed = todos.filter(todo => todo.important === true)
   const notCompleted = todos.filter(todo => todo.important === false)
 
-  const getAllNotes = () => {
-    axios.get('https://pure-sea-64763.herokuapp.com/api/notes')
-    .then((response) =>{
-      setTodos(response.data)
-    })
+  async function getAllNotes() {
+    setLoading(true)
+    const response = await axios.get('https://pure-sea-64763.herokuapp.com/api/notes')
+    setLoading(false)
+    setTodos(response.data)
   }
 
   const handleAddClick = (task, evt) => {
@@ -92,7 +93,7 @@ function App() {
         </Heading>
         <TodoInput handleAddClick={handleAddClick}/>
         <Filters todos={todos} completed={completed.length} notCompleted={notCompleted.length} />
-        <TodoList todos={todos} handleCheckChange={handleCheckChange} handleDelClick={handleDelClick} handleEditClick={handleEditClick}/>
+        <TodoList todos={todos} loading={loading} handleCheckChange={handleCheckChange} handleDelClick={handleDelClick} handleEditClick={handleEditClick}/>
       </VStack>
     </Flex>
   );
